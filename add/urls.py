@@ -15,3 +15,10 @@ urlpatterns = [
     path("test/", test, name = 'test'), 
     path("test2/", test2, name = 'test2'), 
 ]   
+
+
+
+# для того чтобы отобразить html:
+# 1 создать html
+# 2 создать функцию представление в views.py
+# 3 создать ссылку в urls.py по которой будет вызывать эта функция
