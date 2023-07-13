@@ -14,11 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+# path - для создания ссылки
+# include - для подколючения маршпрутизаторов приложения
 
 # импортирую свои представления
 from lesson_4.views import lesson
-from add.views import home, test, test2, top_sellers
+
 
 # главный маршрутизатор
 
@@ -32,9 +35,6 @@ from add.views import home, test, test2, top_sellers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", home, name = 'home'), # главная страница 
-    path("top_sellers", top_sellers, name='top_sellers'), # топ продавцов 
-    path("test/", test, name = 'test'), 
-    path("test2/", test2, name = 'test2'), 
+    path("", include('add.urls')), # подключил марштрутизатор приложения add
     path("lesson_4/", lesson)
 ]   
