@@ -18,6 +18,7 @@ from django.urls import path
 
 # импортирую свои представления
 from lesson_4.views import lesson
+from add.views import home
 
 # главный маршрутизатор
 
@@ -27,7 +28,10 @@ from lesson_4.views import lesson
 # в главном маршрутизаторе urls.py импортировали эту функцию 
 # и создали ссылку
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", home  ), # главкная страница 
     path("lesson_4/", lesson )
 ]

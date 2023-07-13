@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# она указывает на абсолютный путь к вашему проекту (в моем случае C:\Users\User\Desktop\django_1)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lesson_4'
+    'lesson_4',
+    'add'
 ]
 
 MIDDLEWARE = [
@@ -51,11 +53,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'main.urls'
-
+# для настройки html шаблонов 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'templates'], # указал путь к шаблонам
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,6 +121,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [BASE_DIR/'static']  # указал путь к статике
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
