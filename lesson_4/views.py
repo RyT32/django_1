@@ -5,3 +5,25 @@ from django.http import HttpResponse# класс для отправки отв�
 # функция-представление
 def lesson(request):
     return HttpResponse("ДЗ")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
