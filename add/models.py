@@ -1,6 +1,7 @@
 from django.db import models
-
-
+from django.contrib import admin
+from django.utils import timezone # для времени
+from django.utils.html import format_html # для создания строки html 
 # venv/Scripts/activate
 # название цена описание дата создания/обновления   торг
 
@@ -23,6 +24,45 @@ class Advertisement(models.Model):# наследую класс Model для с�
     #работы с самой таблицей
     class Meta:
         db_table = 'add' # название таблицы
+
+    @admin.display(description='дата создания')
+    def created_date(self):
+        if self.created_at.date() == timezone.now().date(): # проверяю что запись была создана сегодня
+            created_time =  self.created_at.time().strftime("%H:%M:%S") # делаю в формате %H:%M:%S (12:20:30)
+            return format_html(
+                '<span style = "color:green; font-weight:bold">Сегодня в {}</span>',created_time
+            )
+        return self.created_at.strftime("%d.%m.%Y at %H:%M:%S")
+
+
+
+    @admin.display(description='дата обновления')
+    def updated_date(self):
+        if self.updated_at.date() == timezone.now().date(): # проверяю что запись была создана сегодня
+            updated_time =  self.updated_at.time().strftime("%H:%M:%S") # делаю в формате %H:%M:%S (12:20:30)
+            return format_html(
+                '<span style = "color:green; font-weight:bold">Сегодня в {}</span>',updated_time
+            )
+        return self.updated_at.strftime("%d.%m.%Y at %H:%M:%S")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # py manage.py shell
 # from add.models import Advertisement
