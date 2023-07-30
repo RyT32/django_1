@@ -1,10 +1,27 @@
 from django.contrib import admin
 # from .models import Test
 from .models import Advertisement
+# импортирую класс для подсказок 
+from django.db.models.query import QuerySet
+
 
 #  admin_class - класс для кастомизации
 class AdvertisementAdmin(admin.ModelAdmin):
-   list_display = ['id','title','description','price','auction','created_at'] 
+   # отображение в витде таблицы
+   list_display = ['id','title','description','price','auction','created_at']  
+   # параметры фильтрации
+   list_filter = ['auction', 'created_at']
+   #добавляю функции  лдля выбранных записей
+   actions = ['make_auction_as_false']
+
+   @admin.action(description='Убрать возможность торга')
+   def make_auction_as_false(self,request,queryset:QuerySet):
+
+      queryset.update(auction = False)
+   # 18:42 - 18:52 
+
+
+
 
 
 
