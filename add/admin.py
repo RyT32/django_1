@@ -4,6 +4,7 @@ from .models import Advertisement
 # импортирую класс для подсказок 
 from django.db.models.query import QuerySet
 
+from decimal import Decimal
 
 #  admin_class - класс для кастомизации
 class AdvertisementAdmin(admin.ModelAdmin):
@@ -12,7 +13,7 @@ class AdvertisementAdmin(admin.ModelAdmin):
    # параметры фильтрации
    list_filter = ['auction', 'created_at']
    #добавляю функции  лдля выбранных записей
-   actions = ['make_auction_as_false','make_auction_as_true']
+   actions = ['make_auction_as_false','make_auction_as_true','sale_30']
    # создание блоков
    fieldsets = (
       (#1 блок
@@ -43,7 +44,15 @@ class AdvertisementAdmin(admin.ModelAdmin):
    @admin.action(description='Добавить возможность торга')
    def make_auction_as_true(self,request,queryset:QuerySet):
       queryset.update(auction = True)   
- 
+   
+
+   @admin.action(description='сделать скидку 30')
+   def sale_30(self,request,queryset:QuerySet):
+      print(queryset)
+      # queryset.update(auction = True) 
+      for i in queryset:
+         i.price = i.price * Decimal(0.7) # изменил
+         i.save()# сохранил
 
 
 
