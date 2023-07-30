@@ -16,7 +16,7 @@ class Advertisement(models.Model):# наследую класс Model для с�
     updated_at = models.DateTimeField(auto_now=True)# дата будет обновляться каждый раз при измении обьявления
 
 
-
+    # представление в виде строки 
     def __str__(self) -> str:
         return f"Advertisement(id={self.id}, title={self.title}, price={self.price})"
 
