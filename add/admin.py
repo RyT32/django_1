@@ -1,70 +1,57 @@
 from django.contrib import admin
-# from .models import Test
-from .models import Advertisement
-# импортирую класс для подсказок 
+
+from .models import Advertisement # импортирую свою модель
 from django.db.models.query import QuerySet
 
-from decimal import Decimal
-
-#  admin_class - класс для кастомизации
-class AdvertisementAdmin(admin.ModelAdmin):
-   # отображение в витде таблицы
-   list_display = ['id','title','description','price','auction','updated_date', 'created_date']  
-   # параметры фильтрации
-   list_filter = ['auction', 'created_at']
-   #добавляю функции  лдля выбранных записей
-   actions = ['make_auction_as_false','make_auction_as_true','sale_30']
-   # создание блоков
-   fieldsets = (
-      (#1 блок
-         'Общее',# название блока
-         {
-            'fields':('title','description') # поля блока
-         }
-      ),
-      (#2 блок
-         'Финансы',# название блока
-         {
-            'fields':('price','auction'), # поля блока
-            'classes':['collapse'], # функционал скрытия блока
-            'description':'Блок финансов' #подсказка о блоке
-         }
-      )
-   )
+# py manage.py createsuperuser - создания аккаунта супер пользователя
+# пароль не отображается
+# http://127.0.0.1:8000/admin
 
 
 
+# класс для кастомизации модели в админке
+class AdvertisementsAdmin(admin.ModelAdmin):
+    list_display = ['id','title','description','price','auction', 'created_date', 'update_date', ] # столбцы для отображения в таблице
+    list_filter = ['auction','created_at','price'] # столбцы по которым будет фильтрация
+    actions = ['make_action_as_false','make_action_as_true'] # методы для выбюранных записей
+    fieldsets = (
+        ('Общие', { # блок 1 
+            "fields": (
+                'title','description',    # поля блока
+            ),
+        }),
+        ('Финансы', { # блок 2
+            "fields": (
+                'price','auction'    # поля блока
+            ),
+            'classes': ['collapse'] # скрыть/показать блок
+        })
+    )
+    
 
 
-   @admin.action(description='Убрать возможность торга')
-   def make_auction_as_false(self,request,queryset:QuerySet):
-      queryset.update(auction = False)
+    @admin.action(description='Убрать возможность торга')
+    def make_action_as_false(self, request, queryset:QuerySet):
+        queryset.update(auction = False) # обновить значение auction у выбранных записей на False
 
 
-   @admin.action(description='Добавить возможность торга')
-   def make_auction_as_true(self,request,queryset:QuerySet):
-      queryset.update(auction = True)   
-   
-
-   @admin.action(description='сделать скидку 30')
-   def sale_30(self,request,queryset:QuerySet):
-      print(queryset)
-      # queryset.update(auction = True) 
-      for i in queryset:
-         i.price = i.price * Decimal(0.7) # изменил
-         i.save()# сохранил
+    @admin.action(description='Добавить возможность торга')
+    def make_action_as_true(self, request, queryset:QuerySet):
+        queryset.update(auction = True) # обновить значение auction у выбранных записей на False
 
 
 
 
 
 
-# подключаю модель
-admin.site.register(Advertisement, AdvertisementAdmin)
+
+
+# подключение модели в админку и кастомной модели
+admin.site.register(Advertisement, AdvertisementsAdmin)
 
 
 
-# admin.site.register(Test)
+
 
 # py manage.py createsuperuser - создание аккаунта админа
 # (вводин имя почту и пароль   ! пароль не отображается )

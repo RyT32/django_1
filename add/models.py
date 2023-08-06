@@ -2,12 +2,16 @@ from django.db import models
 from django.contrib import admin
 from django.utils import timezone # для времени
 from django.utils.html import format_html # для создания строки html 
+
+from django.contrib.auth import get_user_model # метод для получения класса модели пользователей
+
 # venv/Scripts/activate
 # название цена описание дата создания/обновления   торг
 
 # py manage.py makemigrations - создание файлов миграции
 # py manage.py migrate - выполнение миграций (создание физических таблиц)
 
+User = get_user_model()
 class Advertisement(models.Model):# наследую класс Model для создания таблицы в БД
     title = models.CharField('название',max_length=100) #  текстовое поле
     description = models.TextField("описание")
@@ -15,6 +19,36 @@ class Advertisement(models.Model):# наследую класс Model для с�
     auction = models.BooleanField("торг", help_text='Отметьте, возможен ли торг')
     created_at = models.DateTimeField(auto_now_add=True)# сохраняем дату создания
     updated_at = models.DateTimeField(auto_now=True)# дата будет обновляться каждый раз при измении обьявления
+    user = models.ForeignKey(User, on_delete=models.CASCADE) # если User буджет удален то все обьявления связанные с ним тоже будут удалены
+    image = models.ImageField("изображения", upload_to='advertisements/')
+
+# pip install pillow - библиотека для работы с изображениями
+
+
+    #метод если запись была создана сегодня то мы отобразим ее зеленым цветом, если не сегодня , то серым
+    @admin.display(description='дата создания')
+    def created_date(self):
+        if self.created_at.date() == timezone.now().date():#проверяю что запись была создана сегодня
+            created_time =  self.created_at.time().strftime('%H:%M:%S') # 19:30:15
+            return format_html(
+                "<span style='color:green; font-weight: bold'>Сегодня в {}</span>",
+                created_time
+            )
+        return self.created_at.strftime('%d.%m.%Y at %H:%M:%S') # 04.08.2023 at 19:30:15
+
+
+
+    @admin.display(description='дата обновления')
+    def update_date(self):
+        if self.updated_at.date() == timezone.now().date():#проверяю что запись была создана сегодня
+            update_time =  self.updated_at.time().strftime('%H:%M:%S') # 19:30:15
+            return format_html(
+                "<span style='color:green; font-weight: bold'>Сегодня в {}</span>",
+                update_time
+            )
+        return self.updated_at.strftime('%d.%m.%Y at %H:%M:%S') # 04.08.2023 at 19:30:15
+
+
 
 
     # представление в виде строки 
@@ -25,25 +59,7 @@ class Advertisement(models.Model):# наследую класс Model для с�
     class Meta:
         db_table = 'add' # название таблицы
 
-    @admin.display(description='дата создания')
-    def created_date(self):
-        if self.created_at.date() == timezone.now().date(): # проверяю что запись была создана сегодня
-            created_time =  self.created_at.time().strftime("%H:%M:%S") # делаю в формате %H:%M:%S (12:20:30)
-            return format_html(
-                '<span style = "color:green; font-weight:bold">Сегодня в {}</span>',created_time
-            )
-        return self.created_at.strftime("%d.%m.%Y at %H:%M:%S")
-
-
-
-    @admin.display(description='дата обновления')
-    def updated_date(self):
-        if self.updated_at.date() == timezone.now().date(): # проверяю что запись была создана сегодня
-            updated_time =  self.updated_at.time().strftime("%H:%M:%S") # делаю в формате %H:%M:%S (12:20:30)
-            return format_html(
-                '<span style = "color:green; font-weight:bold">Сегодня в {}</span>',updated_time
-            )
-        return self.updated_at.strftime("%d.%m.%Y at %H:%M:%S")
+   
 
 
 
