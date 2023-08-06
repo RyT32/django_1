@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from django.conf import settings # подключил файл setting
+from django.conf.urls.static import static # функция для создания ссылок для картинок
+
 # path - для создания ссылки
 # include - для подколючения маршпрутизаторов приложения
 
@@ -38,3 +41,6 @@ urlpatterns = [
     path("", include('add.urls')), # подключил марштрутизатор приложения add
     path("lesson_4/", lesson)
 ]   
+
+if settings.DEBUG : # если файт в разработке
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT ) # указал ссылку и путь к файлу медиа
