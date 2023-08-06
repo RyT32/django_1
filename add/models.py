@@ -48,6 +48,18 @@ class Advertisement(models.Model):# наследую класс Model для с�
             )
         return self.updated_at.strftime('%d.%m.%Y at %H:%M:%S') # 04.08.2023 at 19:30:15
 
+    @admin.display(description='фото')
+    def photo(self):
+        if self.image:#проверяю что есть картинка
+           
+            return format_html(
+                "<img src = '{}' width='100px' heigth = '100px' ",
+                self.image.url
+            )
+        return format_html(
+                "<img src = 'http://127.0.0.1:8000/media/advertisements/no_image.jpg' width='100px' heigth = '100px' ",
+                
+            )
 
 
 
