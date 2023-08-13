@@ -1,6 +1,7 @@
 from django.shortcuts import render # для того чтобы отдавать html
 
 from .models import Advertisement
+from .forms import AdvertisementForm
 
 
 # функции-представления
@@ -15,7 +16,16 @@ def home(request):
 
 
 def post_adv(request):
-    return render(request, 'advertisement-post.html')
+    form = AdvertisementForm() #создаю пустую форму
+    context = {'form' : form} # словарь
+    return render(request, 'advertisement-post.html', context)
+
+
+
+
+
+
+
 
 
 
