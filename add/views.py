@@ -14,6 +14,9 @@ def home(request):
     return render(request, 'index.html', context)
 
 
+def post_adv(request):
+    return render(request, 'advertisement-post.html')
+
 
 
 def top_sellers(request):

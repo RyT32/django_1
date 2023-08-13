@@ -53,12 +53,11 @@ class Advertisement(models.Model):# наследую класс Model для с�
         if self.image:#проверяю что есть картинка
            
             return format_html(
-                "<img src = '{}' width='100px' heigth = '100px' ",
+                "<img src = '{}' width='100px' heigth = '100px' >",
                 self.image.url
             )
         return format_html(
-                "<img src = 'http://127.0.0.1:8000/media/advertisements/no_image.jpg' width='100px' heigth = '100px' ",
-                
+                "<img src = 'http://127.0.0.1:8000/media/advertisements/no_image.jpg' width='100px' heigth = '100px' >"
             )
 
 

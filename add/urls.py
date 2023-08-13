@@ -2,7 +2,7 @@ from django.urls import path
 
 # импортирую свои представления
 
-from .views import home, test, test2, top_sellers, test3
+from .views import test, test2, test3, home, top_sellers, post_adv
 
 #  маршрутизатор приложения
 
@@ -11,7 +11,9 @@ from .views import home, test, test2, top_sellers, test3
 
 urlpatterns = [
     path("", home, name = 'home'), # главная страница 
-    path("top_sellers", top_sellers, name='top_sellers'), # топ продавцов 
+    path("top_sellers/", top_sellers, name='top_sellers'), # топ продавцов 
+    path("post_adv/", post_adv, name='post_adv'), # создать обьявление
+
     path("test/", test, name = 'test'), 
     path("test2/", test2, name = 'test2'), 
     path("test3/", test3, name = 'test3'), 
