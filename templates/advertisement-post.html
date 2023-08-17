@@ -8,7 +8,7 @@
 {% block content %}
 <ul class="nav nav-pills sticky-top bg-white nav-fill">
   <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="{%url 'home' %}">
+    <a class="nav-link " aria-current="page" href="{%url 'home' %}">
       <span style="font-weight: bold;">Главная</span>
     </a>
   </li>
@@ -17,7 +17,7 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{%url 'post_adv' %}">
+    <a class="nav-link active" href="{%url 'post_adv' %}">
       <span style="font-weight: bold;">Разместить объявление</span>
     </a>
   </li>
@@ -53,18 +53,20 @@
   <div class="container">
 
 
-<!-- enctype="multipart/form-data" - отправляю так же медиа файлы( позволяет загрузить файлы) -->
-    <form method="post" enctype="multipart/form-data">
-      {%csrf_token%}
-      <!-- автоматичесское отправление токена при пост запросе -->
+    <!-- form - тег для создания формы -->
+    <!-- enctype="multipart/form-data"  -позволяет отправлять медиа данные  -->
+    <form method="post" enctype="multipart/form-data" >
+      <!-- автоматическая отправка токена -->
+      {% csrf_token %}
       <div class="row mb-3 offset-sm-4">
           <div class="col-6">
             {{form.as_p}}
-            <!-- отображать форму можно через as_p as_table as_ul -->
+            <!-- as_p as_table as_ul -->
           </div>
 
       </div>  
-        
+
+
       <div class="row mb-3 offset-sm-5">
         <div class="col">
           <button type="submit" class="btn btn-success">Принять</button>
@@ -72,7 +74,7 @@
       </div>
     </form>
 
-
+    <!-- конец формы  -->
     
   </div>
   {% endblock %}

@@ -1,10 +1,20 @@
 from django import forms
 
 
-#widget нужен Для настройки над полями html
 class AdvertisementForm(forms.Form):
-    title =         forms.CharField(max_length=100) 
-    description =   forms.CharField(widget=forms.Textarea()) # чтобы сделать многострочное поле нужно использовать виджет Textarea
-    price =         forms.DecimalField()
-    auction =       forms.BooleanField(required=False) # необязательное поле
-    image =         forms.ImageField()
+    # class="row mb-3 offset-sm-4"
+    title       = forms.CharField(max_length=100, widget=forms.TextInput(
+        {"class": "form-control-lg"}
+    )) 
+    description = forms.CharField(widget=forms.Textarea(
+        {"class": "form-control-lg"}
+    ))
+    price       = forms.DecimalField(widget=forms.NumberInput(
+        {"class": "form-control-lg"}
+    ))
+    auction     = forms.BooleanField(required=False, widget=forms.CheckboxInput(
+        {"class": "form-check-input"}
+    )) # поле необязательное
+    image       = forms.ImageField(widget=forms.FileInput(
+        {"class": "form-control-lg"}
+    ))

@@ -12,7 +12,7 @@ from .views import test, test2, test3, home, top_sellers, post_adv
 urlpatterns = [
     path("", home, name = 'home'), # главная страница 
     path("top_sellers/", top_sellers, name='top_sellers'), # топ продавцов 
-    path("post_adv/", post_adv, name='post_adv'), # создать обьявление
+    path("post_adv/", post_adv, name='post_adv'), # топ продавцов 
 
     path("test/", test, name = 'test'), 
     path("test2/", test2, name = 'test2'), 
