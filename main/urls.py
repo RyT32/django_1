@@ -39,6 +39,7 @@ from lesson_4.views import lesson
 urlpatterns = [
     path('admin/', admin.site.urls),  #http://127.0.0.1:8000/admin
     path("", include('add.urls')), # подключил марштрутизатор приложения add
+    path("auth/", include('app_auth.urls')), # подключил марштрутизатор приложения app_auth
     path("lesson_4/", lesson)
 ]   
 
